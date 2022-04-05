@@ -1,8 +1,15 @@
+import { useState, useRef } from 'react'
+import { useSelector, useDispatch } from 'react-redux'
+import { setIdArrey } from './actions'
+
+//css
 import './App.css';
-import { useState } from 'react'
+import TextField from '@mui/material/TextField';
 
 export default function App() {
-  const [currId, setId] = useState([]);
+  const id = useSelector(state => state.id)
+  const dispatch = useDispatch()
+
   const [checkD, setCeckD] = useState();
 
   const israelKey = [1, 2, 1, 2, 1, 2, 1, 2];
@@ -11,27 +18,24 @@ export default function App() {
   const handleKeyUp = (e) => {
     //prev input
     if (e.key === "Backspace" || e.key === "ArrowLeft") {
-      const next = e.target.tabIndex - 2;
+      const next = (e.target.tabIndex - 2) * 2;//evry input have 2 elements
       if (next > -1) {
         e.target.form.elements[next].focus();
       }
-    } //next input or out
+    }
     else if (!isNaN(e.key)) {
+      //update id
+      dispatch(setIdArrey(e.target.tabIndex - 1, Number(e.target.value)))
       const next = e.target.tabIndex;
+      //next input
       if (next < 8) {
-        e.target.form.elements[next].focus();
+        e.target.form.elements[next * 2].focus();//evry input have 2 elements
+        //out
       } else {
         e.target.blur();
-        setCeckD(checkDigit(currId, israelKey));
+        setCeckD(checkDigit(id, israelKey));
       }
     }
-  };
-
-  //update id
-  const handleCange = (e) => {
-    let newId = currId;
-    newId[e.target.tabIndex - 1] = Number(e.target.value);
-    setId(newId);
   };
 
   //get check digit
@@ -57,17 +61,17 @@ export default function App() {
 
       <form className="inputs-container">
         {[...Array(8)].map((_, index) => (
-          <input
+          <TextField
             key={index}
             type="number"
             onKeyUp={handleKeyUp}
-            onChange={handleCange}
-            tabIndex={index + 1}
+            inputProps={{ tabIndex: index + 1 }}
             autoFocus={index === 0}
             onFocus={(e) => { e.target.select() }}//select to replace when there is some input 
-          ></input>
+          />
         ))}
       </form>
+
       <br />
       <p>{checkD || checkD === 0 ? `your check digit is ${checkD}` : ""}</p>
 

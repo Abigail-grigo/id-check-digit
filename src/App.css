@@ -13,15 +13,9 @@
   display: flex;
   justify-content: center;
 }
-
-input {
-  width: 2rem;
-  height: 3rem;
+.inputs-container > div {
+  width: 3rem;
   margin: 0 0.5rem;
-  font-size: 2rem;
-  text-align: center;
-  border-radius: 4px;
-  border: 1px solid rgba(0, 0, 0, 0.3);
 }
 
 input::-webkit-outer-spin-button,
@@ -30,22 +24,16 @@ input::-webkit-inner-spin-button {
   margin: 0;
 }
 
-@media (max-aspect-ratio: 1/1) {
-  input {
-    width: 10%;
-    margin: 0 1%;
-    height: unset;
-    font-size: 5vw;
-    text-align: center;
-    border-radius: 0;
-    border: 0;
-    border-bottom: 1px solid rgba(0, 0, 0, 0.3);
+@media (max-aspect-ratio: 6/8) {
+  .inputs-container > div {
+    width: 2.5rem;
+    margin: 0px 0.1rem;
   }
-  input:focus {
-    outline: none !important;
-    border: 0;
-    box-shadow: 0;
-    border-radius: 0;
-    border-bottom: 1px solid rgba(0, 0, 0, 0.863);
+}
+
+
+@media (max-aspect-ratio: 4/8) {
+  .css-1t8l2tu-MuiInputBase-input-MuiOutlinedInput-input{
+    padding: 0 !important;
   }
 }
